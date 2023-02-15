@@ -8,13 +8,18 @@
 </head>
 <body>
     <p>To get the flag you must send request with bot.</p>
-    <button>CLICK ME TO GET THE FLAG BRO</button>
+    <p><b id="msg"></b></p>
+    <button id="get_flag">CLICK ME TO GET THE FLAG BRO</button>
     <input type="text" hidden id="token">
     
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
     <script src="hesskamai.js"></script>
 
     <script>
-        init_hk();
+        document.getElementById("get_flag").addEventListener('click', function(e){
+            e.preventDefault()
+            init_hk();
+        })
     </script>
 </body>
 </html>
