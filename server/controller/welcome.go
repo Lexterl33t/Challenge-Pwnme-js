@@ -57,7 +57,12 @@ func parse_alphabet(alphabet string) (string, error) {
 		return "", err
 	}
 
-	alphabet_wine := strings.Split(string(alphabet_decoded), ".")
+	alphabet_decoded2, err := b64.StdEncoding.DecodeString(string(alphabet_decoded))
+	if err != nil {
+		return "", err
+	}
+
+	alphabet_wine := strings.Split(string(alphabet_decoded2), ".")
 
 	for _, letter := range alphabet_wine {
 		letter_dec, err := b64.StdEncoding.DecodeString(letter)
@@ -65,7 +70,12 @@ func parse_alphabet(alphabet string) (string, error) {
 			return "", err
 		}
 
-		alphabet_decode_string += string(letter_dec)
+		letter_dec2, err := b64.StdEncoding.DecodeString(string(letter_dec))
+		if err != nil {
+			return "", err
+		}
+
+		alphabet_decode_string += string(letter_dec2)
 	}
 
 	return alphabet_decode_string, nil
@@ -78,7 +88,12 @@ func parse_timestamp(timestamp string) (string, error) {
 		return "", err
 	}
 
-	return string(timeDec), nil
+	timeDec2, err := b64.StdEncoding.DecodeString(string(timeDec))
+	if err != nil {
+		return "", err
+	}
+
+	return string(timeDec2), nil
 }
 
 func parse_key(key string) (string, error) {
@@ -87,7 +102,12 @@ func parse_key(key string) (string, error) {
 		return "", err
 	}
 
-	return string(keyDec), nil
+	keyDec2, err := b64.StdEncoding.DecodeString(string(keyDec))
+	if err != nil {
+		return "", err
+	}
+
+	return string(keyDec2), nil
 }
 
 func parse_axiome(axiome string) (string, error) {
@@ -96,7 +116,12 @@ func parse_axiome(axiome string) (string, error) {
 		return "", err
 	}
 
-	return string(axiomeDec), nil
+	axiomeDec2, err := b64.StdEncoding.DecodeString(string(axiomeDec))
+	if err != nil {
+		return "", err
+	}
+
+	return string(axiomeDec2), nil
 }
 
 func parse_type(type_enc string) (string, error) {
@@ -105,7 +130,12 @@ func parse_type(type_enc string) (string, error) {
 		return "", err
 	}
 
-	return string(typeDec), nil
+	typeDec2, err := b64.StdEncoding.DecodeString(string(typeDec))
+	if err != nil {
+		return "", err
+	}
+
+	return string(typeDec2), nil
 }
 
 func parse_magic(magic string) (string, error) {
@@ -114,7 +144,12 @@ func parse_magic(magic string) (string, error) {
 		return "", err
 	}
 
-	return string(magicDec), nil
+	magicDec2, err := b64.StdEncoding.DecodeString(string(magicDec))
+	if err != nil {
+		return "", err
+	}
+
+	return string(magicDec2), nil
 }
 
 func parse_token(token string) (ParsedToken, error) {
@@ -291,7 +326,7 @@ func Welcome(ctx *fiber.Ctx) error {
 		return nil
 	}
 
-	if len(token.Token) != 305 {
+	if len(token.Token) != 605 && len(token.Token) != 601 {
 		ctx.Context().SetStatusCode(403)
 		ctx.JSON(map[string]string{
 			"error": "Invalid token",
