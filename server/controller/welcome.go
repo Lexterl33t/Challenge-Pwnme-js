@@ -3,6 +3,7 @@ package controller
 import (
 	b64 "encoding/base64"
 	"errors"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -19,7 +20,7 @@ const MAGIC_NUMBER_CLIENT = 0x13371337
 
 var types map[string]string = map[string]string{
 	"0": "Send valid request to get flag",
-	"1": "1_l1ke_0bfusc4t1on",
+	"1": os.Getenv("FLAG"),
 }
 
 type ParsedToken struct {
@@ -305,7 +306,7 @@ func check_token(p_token ParsedToken) (string, error) {
 func Welcome(ctx *fiber.Ctx) error {
 	token := new(Token)
 
-	if ctx.Get("User-Agent") != "l33t_Akeur" {
+	if ctx.Get("HessAk") != "l33t_Akeur" {
 		ctx.Context().SetStatusCode(403)
 		ctx.JSON(map[string]string{
 			"error": "Invalid Header",

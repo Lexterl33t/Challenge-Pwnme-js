@@ -1,18 +1,23 @@
 package main
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
+	fiber "github.com/gofiber/fiber/v2"
 
 	"obfuscation-challenge-server/routes"
 )
 
 func main() {
+
 	app := fiber.New()
 
-	app.Use(cors.New(cors.Config{
-		AllowOrigins: "*",
-	}))
+	app.Use(func(c *fiber.Ctx) error {
+		c.Set("Access-Control-Allow-Origin", "*")
+		c.Set("Access-Control-Allow-Headers", "Content-Type,User-Agent")
+		return c.Next()
+	})
+
+	app.Static("/static", "../client/static")
+	app.Static("/", "../client/index.html")
 
 	routes.InitRoutes(app)
 
